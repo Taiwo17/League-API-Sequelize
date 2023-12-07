@@ -1,9 +1,4 @@
-/* import League from '../models/league.model'
-import Players from '../models/player.model'
-import Team from '../models/teams.model' */
-
 import DB from '../databases/db'
-
 
 const PlayerRepository = {
   createPlayer: async (

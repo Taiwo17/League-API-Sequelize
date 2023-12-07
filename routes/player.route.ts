@@ -10,11 +10,10 @@ router.get('/all-players', verifyToken, PlayerController.getAllPlayers)
 router.get('/get-players-team', verifyToken, PlayerController.getPlayerWithTeam)
 
 // Only Admin and Super Admin can create a player
-
 router.post(
   '/create-player/:teamId',
   verifyToken,
-  authorizedRoles('superAdmin'),
+  authorizedRoles('admin', 'superAdmin'),
   PlayerController.createPlayer
 )
 

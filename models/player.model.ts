@@ -31,5 +31,15 @@ export default function (sequelize: any, Sequelize: any) {
   )
   // Defining Association
 
+  Players.associate = function (models: any) {
+    // Ensure that 'models' has a reference to the 'teams' model
+    if (models.players && models.players.associate) {
+      Players.belongsTo(models.teams, {
+        onDelete: 'CASCADE', // Correcting typo in 'cascade'
+        // foreignKey: 'teamId',
+      })
+    }
+  }
+
   return Players
 }
