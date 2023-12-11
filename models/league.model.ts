@@ -27,11 +27,11 @@ export default function (sequelize: any, Sequelize: any) {
     // Ensure that 'models' has a reference to the 'teams' model
     if (models.teams && models.teams.associate) {
       League.hasMany(models.teams, {
-        onDelete: 'CASCADE', 
+        onDelete: 'CASCADE',
         foreignKey: 'leagueId',
-      });
+      })
     }
-  };
+  }
 
   return League
 }

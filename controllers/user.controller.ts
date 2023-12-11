@@ -3,6 +3,9 @@ import { StatusCodes } from 'http-status-codes'
 import { Request, Response } from 'express'
 import { comparePassword, hashPassword } from '../utils/password.util'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
+import TokenRespository from '../respository/token.repository'
+import { prepareMail } from '../utils/sendMail'
 
 const UserController = {
   createUser: async (req: Request, res: Response) => {
@@ -17,9 +20,24 @@ const UserController = {
         passwordOne,
         roles
       )
+      const token = crypto.randomBytes(32).toString('hex')
+      await TokenRespository.createToken({
+        userId: createUser.dataValues?.id,
+        token,
+      })
+
+      const verificationUrl = `${process.env.BASE_URL}/user/${createUser.dataValues?.id}/verify/${token}`
+      console.log(verificationUrl)
+
+      const prepare = await prepareMail(
+        createUser.dataValues?.email,
+        'Verify email',
+        verificationUrl
+      )
+
       return res.status(StatusCodes.OK).json({
-        message: 'User created',
-        data: createUser,
+        message: 'User created and Email sent successfully',
+        createUser,
       })
     } catch (error: any) {
       console.log('Error', error.stack)
@@ -33,6 +51,12 @@ const UserController = {
       if (!user) {
         return res.status(StatusCodes.NOT_FOUND).json({
           message: 'User not found!',
+        })
+      }
+
+      if (user.dataValues.emailVerified === false) {
+        return res.status(StatusCodes.METHOD_NOT_ALLOWED).json({
+          message: 'Check your mail to verify your mail before logging in',
         })
       }
 

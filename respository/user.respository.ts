@@ -1,6 +1,5 @@
 import DB from '../databases/db'
 
-
 const UserRespository = {
   createUser: async (
     name: string,
@@ -33,6 +32,16 @@ const UserRespository = {
       return findOneUser
     } catch (error: any) {
       console.log(error.message)
+    }
+  },
+  updateUserEmail: async (id: number, emailVerified: boolean) => {
+    try {
+      const verifiedEmail = await DB.users.findByPk(id)
+      if (!verifiedEmail) return 'User does not exist'
+      await verifiedEmail.update({ emailVerified })
+      return verifiedEmail
+    } catch (error: any) {
+      console.log(error.stack)
     }
   },
 }

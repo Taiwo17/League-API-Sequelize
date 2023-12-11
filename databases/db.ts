@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { Sequelize, Op, Dialect, DataTypes } from 'sequelize'
+import { Sequelize, Op, DataTypes } from 'sequelize'
 import dotenv from 'dotenv'
 
 dotenv.config()

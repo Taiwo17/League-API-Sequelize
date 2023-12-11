@@ -2,6 +2,7 @@ export default function (sequelize: any, Sequelize: any) {
   const Users = sequelize.define(
     'users',
     {
+
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -19,6 +20,10 @@ export default function (sequelize: any, Sequelize: any) {
         values: ['user', 'admin', 'superAdmin'],
         defaultValue: 'user',
       },
+      emailVerified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      }
     },
     {
       timestamps: true,
@@ -26,6 +31,16 @@ export default function (sequelize: any, Sequelize: any) {
     }
   )
   // Defining Association
+
+   Users.associate = function (models: any) {
+    // Ensure that 'models' has a reference to the 'teams' model
+    if (models.users && models.users.associate) {
+      Users.hasOne(models.tokens, {
+        onDelete: 'CASCADE', 
+        foreignKey: 'userId',
+      });
+    }
+  }; 
 
   return Users
 }

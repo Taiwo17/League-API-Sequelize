@@ -13,20 +13,25 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.6",
+    "@types/crypto-js": "^4.2.1",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.10.3",
+    "@types/nodemailer": "^6.4.14",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.2"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.5",
+    "nodemailer": "^6.9.7",
+    "sendpulse-api": "^1.1.6",
     "sequelize": "^6.35.1"
   }
 }
