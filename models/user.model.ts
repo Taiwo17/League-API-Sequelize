@@ -2,7 +2,6 @@ export default function (sequelize: any, Sequelize: any) {
   const Users = sequelize.define(
     'users',
     {
-
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -22,25 +21,32 @@ export default function (sequelize: any, Sequelize: any) {
       },
       emailVerified: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
-      }
+        defaultValue: false,
+      },
     },
     {
       timestamps: true,
       freezeTableName: true,
-    }
+    },
   )
   // Defining Association
 
-   Users.associate = function (models: any) {
-    // Ensure that 'models' has a reference to the 'teams' model
-    if (models.users && models.users.associate) {
-      Users.hasOne(models.tokens, {
-        onDelete: 'CASCADE', 
-        foreignKey: 'userId',
-      });
-    }
-  }; 
+  //  Users.associate = function (models: any) {
+  //   // Ensure that 'models' has a reference to the 'teams' model
+  //   if (models.users && models.users.associate) {
+  //     Users.hasOne(models.tokens, {
+  //       onDelete: 'CASCADE',
+  //       foreignKey: 'userId',
+  //     });
+  //   }
+  // };
 
+  Users.associate = function (models: any) {
+    Users.hasOne(models.tokens, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    })
+  }
   return Users
 }

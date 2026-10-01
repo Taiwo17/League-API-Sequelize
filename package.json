@@ -5,7 +5,10 @@
   "main": "server.ts",
   "scripts": {
     "dev": "ts-node-dev server.ts",
-    "start": "node server.ts"
+    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "db:migrate": "sequelize-cli db:migrate --env production --config config/migrations.cjs --migrations-path migrations",
+    "db:migrate:status": "sequelize-cli db:migrate:status --env production --config config/migrations.cjs --migrations-path migrations"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +21,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.10.3",
     "@types/nodemailer": "^6.4.14",
+    "sequelize-cli": "^6.6.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.2"
   },

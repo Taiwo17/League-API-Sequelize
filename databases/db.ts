@@ -12,8 +12,9 @@ const dbPassword = process.env.DB_PASSWORD as string
 const db: any = {}
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: 'localhost',
+  host: process.env.DB_HOST,
   dialect: 'mysql',
+  port: Number(process.env.DB_PORT ?? 3306),
   pool: {
     max: 5,
     min: 0,
@@ -44,22 +45,18 @@ Object.keys(db).forEach((modelName) => {
 })
 
 // Sync Database
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log('DB CONNECTED')
-  })
-  .catch((err) => {
-    console.error('Database synchronization error:', err)
-  })
+// sequelize
+//   .sync({ alter: true })
+//   .then(() => {
+//     console.log('DB CONNECTED')
+//   })
+//   .catch((err) => {
+//     console.error('Database synchronization error:', err)
+//   })
 
-export const dbConn = async () => {
-  try {
-    await sequelize.authenticate()
-    console.log('Connnected!!!')
-  } catch (error: any) {
-    console.log(error.stack)
-  }
+export const dbConn = async (): Promise<void> => {
+  await sequelize.authenticate()
+  console.log('Database connected')
 }
 
 export default db

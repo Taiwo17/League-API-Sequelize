@@ -18,19 +18,27 @@ export default function (sequelize: any, Sequelize: any) {
     {
       timestamps: true,
       freezeTableName: true,
-    }
+    },
   )
   // Defining Association
   // Association btw Leagues and Teams
 
+  // League.associate = function (models: any) {
+  //   // Ensure that 'models' has a reference to the 'teams' model
+  //   if (models.teams && models.teams.associate) {
+  //     League.hasMany(models.teams, {
+  //       onDelete: 'CASCADE',
+  //       foreignKey: 'leagueId',
+  //     })
+  //   }
+  // }
+
   League.associate = function (models: any) {
-    // Ensure that 'models' has a reference to the 'teams' model
-    if (models.teams && models.teams.associate) {
-      League.hasMany(models.teams, {
-        onDelete: 'CASCADE',
-        foreignKey: 'leagueId',
-      })
-    }
+    League.hasMany(models.teams, {
+      foreignKey: 'leagueId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    })
   }
 
   return League
