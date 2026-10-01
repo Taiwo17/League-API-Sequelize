@@ -18,7 +18,7 @@ const UserController = {
         name,
         email,
         passwordOne,
-        roles
+        roles,
       )
       const token = crypto.randomBytes(32).toString('hex')
       await TokenRespository.createToken({
@@ -26,13 +26,13 @@ const UserController = {
         token,
       })
 
-      const verificationUrl = `${process.env.BASE_URL}/user/${createUser.dataValues?.id}/verify/${token}`
+      const verificationUrl = `${process.env.BASE_URL}/api/v1/user/${createUser.dataValues?.id}/verify/${token}`
       console.log(verificationUrl)
 
       const prepare = await prepareMail(
         createUser.dataValues?.email,
         'Verify email',
-        verificationUrl
+        verificationUrl,
       )
 
       return res.status(StatusCodes.OK).json({
@@ -80,7 +80,7 @@ const UserController = {
           roles: user.dataValues.roles,
         },
         process.env.JWT_SECRET || '',
-        { expiresIn: '7d' }
+        { expiresIn: '7d' },
       )
 
       // Login user

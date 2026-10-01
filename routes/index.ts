@@ -1,9 +1,9 @@
 import express from 'express'
-import TeamRouter from './team.route'
-import PlayerRouter from './player.route'
-import LeagueRouter from './league.route'
-import UserRouter from './user.route'
-import TokenRouter from './token.route'
+import TeamRouter from './team.routess'
+import PlayerRouter from './player.routess'
+import LeagueRouter from './league.routess'
+import UserRouter from './user.routess'
+import TokenRouter from './token.routess'
 
 const router = express.Router()
 

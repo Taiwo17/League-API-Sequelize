@@ -1,5 +1,5 @@
 import express from 'express'
-import LeagueController from '../controllers/league.controller'
+import LeagueController from '../controllers/league.controllers'
 import { authorizedRoles, verifyToken } from '../utils/verifyToken'
 
 const router = express.Router()
