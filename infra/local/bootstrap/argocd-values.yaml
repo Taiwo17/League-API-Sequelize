@@ -1,0 +1,25 @@
+global:
+  domain: argocd.localhost
+
+configs:
+  cm:
+    url: https://argocd.localhost:18443
+  params:
+    server.insecure: true
+
+server:
+  replicas: 1
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hostname: argocd.localhost
+    annotations:
+      cert-manager.io/cluster-issuer: league-local-ca
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+    tls: true
+dex:
+  enabled: false
+
+notifications:
+  enabled: false

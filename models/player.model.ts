@@ -27,18 +27,26 @@ export default function (sequelize: any, Sequelize: any) {
     {
       timestamps: true,
       freezeTableName: true,
-    }
+    },
   )
   // Defining Association
 
+  // Players.associate = function (models: any) {
+  //   // Ensure that 'models' has a reference to the 'teams' model
+  //   if (models.players && models.players.associate) {
+  //     Players.belongsTo(models.teams, {
+  //       onDelete: 'CASCADE', // Correcting typo in 'cascade'
+  //       // foreignKey: 'teamId',
+  //     })
+  //   }
+  // }
+
   Players.associate = function (models: any) {
-    // Ensure that 'models' has a reference to the 'teams' model
-    if (models.players && models.players.associate) {
-      Players.belongsTo(models.teams, {
-        onDelete: 'CASCADE', // Correcting typo in 'cascade'
-        // foreignKey: 'teamId',
-      })
-    }
+    Players.belongsTo(models.teams, {
+      foreignKey: 'teamId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    })
   }
 
   return Players
