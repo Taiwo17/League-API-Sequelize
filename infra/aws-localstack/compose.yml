@@ -1,0 +1,25 @@
+name: league-aws-local
+
+services:
+  localstack:
+    image: ${LOCALSTACK_IMAGE:?Set LOCALSTACK_IMAGE}
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:4566:4566'
+    environment:
+      LOCALSTACK_AUTH_TOKEN: ${LOCALSTACK_AUTH_TOKEN:?Set your auth token}
+      SERVICES: s3,iam,ec2,sts,dynamodb
+      DEBUG: '0'
+      PERSISTENCE: '1'
+    volumes:
+      - localstack_data:/var/lib/localstack
+    cpus: '1.0'
+    mem_limit: 2g
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+volumes:
+  localstack_data:

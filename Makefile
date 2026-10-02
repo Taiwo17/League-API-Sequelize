@@ -53,3 +53,19 @@ bootstrap-check:
 >kubectl --context $(KUBE_CONTEXT) -n cert-manager get pods,certificates
 >kubectl --context $(KUBE_CONTEXT) get clusterissuers
 >kubectl --context $(KUBE_CONTEXT) -n argocd get pods,ingress,certificates
+
+
+LOCALSTACK_DEV_DIR := infra/aws-localstack/envs/dev
+LOCALSTACK_VPC_DIR := infra/aws-localstack/modules/vpc
+
+.PHONY: local-dev-fmt local-dev-validate local-dev-plan
+
+local-dev-fmt:
+>terraform -chdir=$(LOCALSTACK_VPC_DIR) fmt
+>terraform -chdir=$(LOCALSTACK_DEV_DIR) fmt
+
+local-dev-validate: local-dev-fmt
+>terraform -chdir=$(LOCALSTACK_DEV_DIR) validate
+
+local-dev-plan: local-dev-validate
+>env -u AWS_PROFILE -u AWS_DEFAULT_PROFILE -u AWS_SESSION_TOKEN AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_EC2_METADATA_DISABLED=true terraform -chdir=$(LOCALSTACK_DEV_DIR) plan -lock-timeout=30s -out=dev.tfplan
